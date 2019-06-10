@@ -1,4 +1,10 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+# Needed for `bazel run //:gazelle`
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/CodethinkLabs/hello-golang
+gazelle(name = "gazelle")
+
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_binary(
     name = "server",
