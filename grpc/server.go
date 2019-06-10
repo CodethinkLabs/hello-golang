@@ -8,13 +8,16 @@ import (
 	"time"
 
 	"google.golang.org/grpc"
+
+	pb "proto"
+
+	"github.com/golang/protobuf/ptypes"
 )
-import pb "proto"
 
 type message struct {
-	name    string
-	message string
-	time    int64
+	name      string
+	message   string
+	timestamp time.Time
 }
 
 type server struct {
@@ -22,17 +25,22 @@ type server struct {
 }
 
 func (s *server) Confess(ctx context.Context, in *pb.SubmitMessage) (*pb.ReceiveReply, error) {
+	timeStart := time.Now()
+
 	lastMessage := s.messages[len(s.messages)-1]
+
 	newMessage := message{
-		name:    strings.TrimSpace(in.Name),
-		message: strings.TrimSpace(in.Message),
-		time:    time.Now().Unix(),
+		name:      strings.TrimSpace(in.Name),
+		message:   strings.TrimSpace(in.Message),
+		timestamp: timeStart,
 	}
 
+	timestampProto, _ := ptypes.TimestampProto(lastMessage.timestamp)
+
 	reply := pb.ReceiveReply{
-		Message: lastMessage.message,
-		Name:    lastMessage.name,
-		Time:    lastMessage.time,
+		Message:   lastMessage.message,
+		Name:      lastMessage.name,
+		Timestamp: timestampProto,
 	}
 
 	s.messages = append(s.messages, newMessage)

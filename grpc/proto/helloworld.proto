@@ -1,6 +1,9 @@
 syntax = "proto3";
 
 package hello_proto;
+
+import "google/protobuf/timestamp.proto";
+
 option go_package = "proto";
 
 service Confession {
@@ -14,8 +17,7 @@ message SubmitMessage {
 }
 
 message ReceiveReply {
-    // TODO: bazel protoc does not support Timestamp
-    int64 time = 1;
+    google.protobuf.Timestamp timestamp = 1;
     string name = 2;
     string message = 3;
 }

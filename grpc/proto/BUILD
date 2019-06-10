@@ -18,6 +18,7 @@ proto_library(
     name = "proto_proto",
     srcs = ["helloworld.proto"],
     visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:timestamp_proto"],
 )
 
 go_library(

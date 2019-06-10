@@ -11,6 +11,7 @@ go_binary(
     srcs = ["server.go"],
     deps = [
         "//proto:helloworld_go_proto",
+        "@com_github_golang_protobuf//ptypes:go_default_library_gen",
         "@org_golang_google_grpc//:go_default_library",
     ],
 )
@@ -34,6 +35,7 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "//proto:helloworld_go_proto",
+        "@com_github_golang_protobuf//ptypes:go_default_library_gen",
         "@org_golang_google_grpc//:go_default_library",
     ],
 )

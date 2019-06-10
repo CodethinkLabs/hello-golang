@@ -1,14 +1,15 @@
 package main
 
 import (
-	pb "proto"
 	"bufio"
 	"context"
 	"fmt"
-	"google.golang.org/grpc"
 	"log"
 	"os"
+	pb "proto"
 	"time"
+
+	"google.golang.org/grpc"
 )
 
 const address = "localhost:8080"
@@ -21,9 +22,8 @@ func main() {
 	defer conn.Close()
 	c := pb.NewConfessionClient(conn)
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second * 1000)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*1000)
 	defer cancel()
-
 
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Name: ")
@@ -41,7 +41,7 @@ func main() {
 		if r.Message == "" {
 			fmt.Println("No Messages")
 		} else {
-			fmt.Printf("Last message from %v: %v\n", r.Name, r.Message)
+			fmt.Printf("Last message from: %s\n", r)
 		}
 	}
 }
