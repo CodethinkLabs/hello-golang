@@ -23,3 +23,17 @@ go_binary(
         "@org_golang_google_grpc//:go_default_library",
     ],
 )
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "client.go",
+        "server.go",
+    ],
+    importpath = "github.com/CodethinkLabs/hello-golang",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//proto:helloworld_go_proto",
+        "@org_golang_google_grpc//:go_default_library",
+    ],
+)

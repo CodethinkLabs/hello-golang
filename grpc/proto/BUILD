@@ -1,3 +1,4 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
 proto_library(
@@ -9,6 +10,27 @@ go_proto_library(
     name = "helloworld_go_proto",
     compilers = ["@io_bazel_rules_go//proto:go_grpc"],
     importpath = "proto",
-    proto = ":helloworld_proto",
+    proto = ":proto_proto",
+    visibility = ["//visibility:public"],
+)
+
+proto_library(
+    name = "proto_proto",
+    srcs = ["helloworld.proto"],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "go_default_library",
+    embed = [":proto_go_proto"],
+    importpath = "github.com/CodethinkLabs/hello-golang/proto",
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "proto_go_proto",
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    importpath = "github.com/CodethinkLabs/hello-golang/proto",
+    proto = ":proto_proto",
     visibility = ["//visibility:public"],
 )
