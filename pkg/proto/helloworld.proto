@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package hello_proto;
+
+option go_package = "proto";
+
+service MessageService {
+  rpc Message(Send) returns (Response) {}
+  rpc MessageReverse(Send) returns (Response) {}
+}
+
+message Send { string message = 1; }
+
+message Response { string message = 1; }
