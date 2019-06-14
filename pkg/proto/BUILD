@@ -18,20 +18,19 @@ proto_library(
     name = "proto_proto",
     srcs = ["helloworld.proto"],
     visibility = ["//visibility:public"],
-    deps = ["@com_google_protobuf//:timestamp_proto"],
 )
 
 go_library(
     name = "go_default_library",
     embed = [":proto_go_proto"],
-    importpath = "github.com/CodethinkLabs/hello-golang/proto",
+    importpath = "github.com/CodethinkLabs/hello-golang/pkg/proto",
     visibility = ["//visibility:public"],
 )
 
 go_proto_library(
     name = "proto_go_proto",
     compilers = ["@io_bazel_rules_go//proto:go_grpc"],
-    importpath = "github.com/CodethinkLabs/hello-golang/proto",
+    importpath = "github.com/CodethinkLabs/hello-golang/pkg/proto",
     proto = ":proto_proto",
     visibility = ["//visibility:public"],
 )
