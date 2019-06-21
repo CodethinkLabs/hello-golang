@@ -26,6 +26,10 @@ func (ms *messageService) Message(ctx context.Context, in *hellopb.Send) (*hello
 	return &hellopb.Response{Message: "bar"}, nil
 }
 
+func (ms *messageService) MessageReverse(ctx context.Context, in *hellopb.Send) (*hellopb.Response, error) {
+	return &hellopb.Response{Message: "bar"}, nil
+}
+
 func main() {
 	hostname, _ := os.Hostname()
 	msgService := NewMessageService(hostname)

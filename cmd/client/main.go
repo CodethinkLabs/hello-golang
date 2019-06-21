@@ -25,4 +25,8 @@ func main() {
 
 	fmt.Printf("%s", response.Message)
 
+	response2, _ := cli.MessageReverse("Hey")
+
+	fmt.Printf("%s", response2.Message)
+
 }
