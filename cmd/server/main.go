@@ -23,11 +23,11 @@ func NewMessageService(name string) hellopb.MessageServiceServer {
 }
 
 func (ms *messageService) Message(ctx context.Context, in *hellopb.Send) (*hellopb.Response, error) {
-	return &hellopb.Response{Message: "bar"}, nil
+	return &hellopb.Response{Message: "Message response"}, nil
 }
 
 func (ms *messageService) MessageReverse(ctx context.Context, in *hellopb.Send) (*hellopb.Response, error) {
-	return &hellopb.Response{Message: "bar"}, nil
+	return &hellopb.Response{Message: in.Message}, nil
 }
 
 func main() {

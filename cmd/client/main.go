@@ -23,10 +23,10 @@ func main() {
 	cli := client.NewClient("foo", mc)
 	response, _ := cli.Message("Hey")
 
-	fmt.Printf("%s", response.Message)
+	fmt.Println(response.Message)
 
 	response2, _ := cli.MessageReverse("Hey")
 
-	fmt.Printf("%s", response2.Message)
+	fmt.Println(response2.Message)
 
 }
