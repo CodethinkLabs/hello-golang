@@ -20,7 +20,8 @@ func main() {
 	defer conn.Close()
 
 	mc := hellopb.NewMessageServiceClient(conn)
-	cli := client.NewClient("foo", mc)
+	yo := hellopb.NewYoServiceClient(conn)
+	cli := client.NewClient("foo", mc, yo)
 	response, _ := cli.Message("Hey")
 
 	fmt.Println(response.Message)
@@ -28,5 +29,9 @@ func main() {
 	response2, _ := cli.MessageReverse("Hey")
 
 	fmt.Println(response2.Message)
+
+	response3, _ := cli.Yo("ellooo")
+
+	fmt.Println(response3.Message)
 
 }

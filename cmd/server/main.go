@@ -1,41 +1,24 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net"
 	"os"
 
+	"github.com/CodethinkLabs/hello-golang/pkg/server"
 	"google.golang.org/grpc"
 
 	hellopb "github.com/CodethinkLabs/hello-golang/pkg/proto"
 )
 
-type messageService struct {
-	name string
-}
-
-func NewMessageService(name string) hellopb.MessageServiceServer {
-	ms := &messageService{
-		name: name,
-	}
-	return ms
-}
-
-func (ms *messageService) Message(ctx context.Context, in *hellopb.Send) (*hellopb.Response, error) {
-	return &hellopb.Response{Message: "Message response"}, nil
-}
-
-func (ms *messageService) MessageReverse(ctx context.Context, in *hellopb.Send) (*hellopb.Response, error) {
-	return &hellopb.Response{Message: in.Message}, nil
-}
-
 func main() {
 	hostname, _ := os.Hostname()
-	msgService := NewMessageService(hostname)
+	msgService := server.NewMessageService(hostname)
+	yoService := server.NewYoService(hostname)
 
 	s := grpc.NewServer()
 	hellopb.RegisterMessageServiceServer(s, msgService)
+	hellopb.RegisterYoServiceServer(s, yoService)
 
 	sock, err := net.Listen("tcp", ":8080")
 	if err != nil {
