@@ -9,12 +9,14 @@ import (
 type Client struct {
 	name          string
 	messageClient hellopb.MessageServiceClient
+	yoClient      hellopb.YoServiceClient
 }
 
-func NewClient(name string, messageClient hellopb.MessageServiceClient) *Client {
+func NewClient(name string, messageClient hellopb.MessageServiceClient, yoClient hellopb.YoServiceClient) *Client {
 	return &Client{
 		name:          name,
 		messageClient: messageClient,
+		yoClient:      yoClient,
 	}
 }
 
@@ -30,16 +32,16 @@ func (cli *Client) Message(message string) (*hellopb.Response, error) {
 func (cli *Client) MessageReverse(message string) (*hellopb.Response, error) {
 
 	msg := &hellopb.Send{
-		Message: Reverse(message),
+		Message: message,
 	}
 
 	return cli.messageClient.MessageReverse(context.Background(), msg)
 }
 
-func Reverse(s string) string {
-	runes := []rune(s)
-	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
-		runes[i], runes[j] = runes[j], runes[i]
+func (cli *Client) Yo(message string) (*hellopb.Response, error) {
+	msg := &hellopb.Send{
+		Message: message,
 	}
-	return string(runes)
+
+	return cli.yoClient.Yo(context.Background(), msg)
 }

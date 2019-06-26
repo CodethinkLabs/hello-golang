@@ -9,6 +9,10 @@ service MessageService {
   rpc MessageReverse(Send) returns (Response) {}
 }
 
+service YoService {
+  rpc Yo(Send) returns (Response) {}
+}
+
 message Send { string message = 1; }
 
 message Response { string message = 1; }
