@@ -13,6 +13,10 @@ service YoService {
   rpc Yo(Send) returns (Response) {}
 }
 
+service ConcatService {
+  rpc Concat(stream Send) returns (Response) {}
+}
+
 message Send { string message = 1; }
 
 message Response { string message = 1; }
