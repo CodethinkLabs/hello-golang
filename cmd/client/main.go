@@ -21,7 +21,9 @@ func main() {
 
 	mc := hellopb.NewMessageServiceClient(conn)
 	yo := hellopb.NewYoServiceClient(conn)
-	cli := client.NewClient("foo", mc, yo)
+	cc := hellopb.NewConcatServiceClient(conn)
+	cli := client.NewClient("foo", mc, yo, cc)
+
 	response, _ := cli.Message("Hey")
 
 	fmt.Println(response.Message)
@@ -33,5 +35,11 @@ func main() {
 	response3, _ := cli.Yo("ellooo")
 
 	fmt.Println(response3.Message)
+
+	stringArray := [3]string{"Hello", "World", "!"}
+
+	response4, _ := cli.Concat(stringArray)
+
+	fmt.Println(response4)
 
 }

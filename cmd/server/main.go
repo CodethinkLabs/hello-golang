@@ -15,10 +15,12 @@ func main() {
 	hostname, _ := os.Hostname()
 	msgService := server.NewMessageService(hostname)
 	yoService := server.NewYoService(hostname)
+	concatService := server.NewConcatService(hostname)
 
 	s := grpc.NewServer()
 	hellopb.RegisterMessageServiceServer(s, msgService)
 	hellopb.RegisterYoServiceServer(s, yoService)
+	hellopb.RegisterConcatServiceServer(s, concatService)
 
 	sock, err := net.Listen("tcp", ":8080")
 	if err != nil {
