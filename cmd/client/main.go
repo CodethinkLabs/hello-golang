@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+	"strconv"
+	"sync"
 
 	"google.golang.org/grpc"
 
@@ -12,7 +14,16 @@ import (
 
 const address = "localhost:8080"
 
+func yoCall(cli *client.Client, call string, wg *sync.WaitGroup) {
+	defer wg.Done()
+	response, _ := cli.Yo(call)
+	fmt.Println(response)
+}
+
 func main() {
+
+	var wg sync.WaitGroup
+
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("Connection problem: ", err)
@@ -22,16 +33,14 @@ func main() {
 	mc := hellopb.NewMessageServiceClient(conn)
 	yo := hellopb.NewYoServiceClient(conn)
 	cli := client.NewClient("foo", mc, yo)
-	response, _ := cli.Message("Hey")
 
-	fmt.Println(response.Message)
+	for i := 0; i < 5; i++ {
+		wg.Add(1)
+		go yoCall(cli, strconv.Itoa(i), &wg)
 
-	response2, _ := cli.MessageReverse("Hey")
+	}
 
-	fmt.Println(response2.Message)
-
-	response3, _ := cli.Yo("ellooo")
-
-	fmt.Println(response3.Message)
+	wg.Wait()
+	fmt.Println("Done.")
 
 }
