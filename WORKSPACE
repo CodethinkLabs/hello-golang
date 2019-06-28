@@ -27,3 +27,15 @@ go_repository(
     name = "org_golang_google_grpc",
     importpath = "google.golang.org/grpc",  # Import path used in the .go files
 )
+
+go_repository(
+    name = "com_github_golang_protobuf",
+    commit = "b285ee9cfc6c881bb20c0d8dc73370ea9b9ec90f",
+    importpath = "github.com/golang/protobuf",
+)
+
+go_repository(
+    name = "com_github_codethinklabs_hello_golang",
+    commit = "079dacac0726be5d456761347e5ecc21fb797921",
+    importpath = "github.com/CodethinkLabs/hello-golang",
+)
